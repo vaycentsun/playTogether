@@ -1,0 +1,86 @@
+{
+  "name": "playtogether",
+  "version": "0.1.0",
+  "private": true,
+  "description": "为英雄无敌 3 HD Mod 设计的轻量异地局域网工具",
+  "type": "module",
+  "main": "electron/main/index.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "concurrently -k npm:dev:renderer npm:dev:electron",
+    "dev:renderer": "vite",
+    "dev:electron": "wait-on tcp:127.0.0.1:5173 && cross-env PLAYTOGETHER_DEV_URL=http://127.0.0.1:5173 electron .",
+    "start": "electron .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/unit/*.test.js",
+    "test:integration": "node --test test/integration/*.test.js",
+    "build:renderer": "vite build",
+    "fetch:core": "node scripts/fetch-easytier.mjs",
+    "build": "npm run typecheck && npm run test && npm run build:renderer && electron-builder --win nsis --x64",
+    "pack:win": "npm run fetch:core -- --platform win32 --arch x64 && npm run build"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "concurrently": "10.0.7",
+    "cross-env": "10.1.0",
+    "electron": "45.3.4",
+    "electron-builder": "26.18.0",
+    "typescript": "^5.9.3",
+    "vite": "8.3.8",
+    "wait-on": "9.5.1"
+  },
+  "overrides": {
+    "minimatch": "11.0.9"
+  },
+  "build": {
+    "appId": "cn.playtogether.desktop",
+    "productName": "PlayTogether",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "core/win32-x64",
+        "to": "easytier",
+        "filter": [
+          "**/*.exe",
+          "**/*.dll",
+          "**/*.sys"
+        ]
+      },
+      {
+        "from": "resources/licenses",
+        "to": "licenses",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "PlayTogether"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+PlayTogether 第三方组件说明
+===========================
+
+EasyTier 2.6.4
+--------------
+项目与对应源代码：https://github.com/EasyTier/EasyTier/tree/v2.6.4
+发布文件：https://github.com/EasyTier/EasyTier/releases/tag/v2.6.4
+许可证：GNU Lesser General Public License v3.0，完整文本见 EasyTier-LICENSE.txt。
+PlayTogether 通过独立子进程调用未经修改的 easytier-core 和 easytier-cli。
+Windows x86_64 发布包 SHA-256：27af91e270e554709b048bd32327fefd2dfce5062ae1e8701af7550c6f525f84
+
+Wintun
+------
+项目：https://www.wintun.net/
+预编译 wintun.dll 随 EasyTier 官方 Windows 发布包提供。
+预编译二进制许可证见 Wintun-Binary-LICENSE.txt。
+
+Packet.dll / WinDivert64.sys
+---------------------------
+这些文件由 EasyTier 官方 Windows 发布包原样提供，用于其 Windows 网络功能。
+EasyTier 对应源代码和第三方组件说明见上述项目仓库。
